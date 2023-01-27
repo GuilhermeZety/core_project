@@ -1,0 +1,9 @@
+{
+  "@@locale": "pt",
+
+  "salve": "salve",
+  "@salve": {
+    "description": "Um Simples Salve"
+  }
+}
+

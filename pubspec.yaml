@@ -1,0 +1,68 @@
+name: core_project
+description: A new Flutter project.
+
+# Prevent accidental publishing to pub.dev.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  #HTTPs Requests
+  dio: ^4.0.6
+  #More theme options
+  flex_color_scheme: ^6.1.2
+  #Gap between widgets
+  gap: ^2.0.1
+  #Singleton Package
+  get_it: ^7.2.0
+  get_it_mixin: ^3.1.4+2
+  #Router Options
+  go_router: ^6.0.1
+  #Check connectivity
+  internet_connection_checker_plus: ^1.0.1
+  #Utilities
+  intl: ^0.17.0
+  #More Animation loading options
+  loading_animation_widget: ^1.2.0+4
+  #Cache
+  shared_preferences: ^2.0.17
+  #Get directory of project
+  path_provider: ^2.0.12
+  path_provider_ios: ^2.0.11
+  sized_context: ^1.0.0+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Enable generation of localized Strings from arb files.
+  generate: true
+
+  assets:
+    # Add assets from the images directory to the application.
+    - assets/images/
+
+  fonts:
+    - family: Myriad Pro
+      fonts:
+        - asset: assets/fonts/Myriad-Pro-Light.otf
+          weight: 300
+        - asset: assets/fonts/Myriad-Pro-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Myriad-Pro-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Myriad-Pro-Black.otf
+          weight: 900

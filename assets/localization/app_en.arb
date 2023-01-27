@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+
+  "salve": "Hello!",
+  "@salve": {
+    "description": "One Simple Hello"
+  }
+}
+
