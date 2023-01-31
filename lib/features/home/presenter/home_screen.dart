@@ -26,10 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButton(onPressed: () {
-                    settingsLogic.changeThemeMode(ThemeMode.light);
-
-                  }, child: Text('Change Theme To Light')),
+                  TextButton(
+                    onPressed: () => settingsLogic.changeThemeMode(ThemeMode.light), 
+                    child: Text('Change Theme To Light')
+                  ),
                   TextButton(onPressed: () {
                     settingsLogic.changeThemeMode(ThemeMode.dark);
 

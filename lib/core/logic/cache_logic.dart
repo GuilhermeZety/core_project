@@ -18,9 +18,10 @@ class CacheLogic{
   ///Paths
   final String _accessToken = 'accessToken';
 
-  Future<bool> setAccessToken(AccessTokenModel token) => preferences.setString(_accessToken, token.toJson());
-  AccessTokenModel? getAccessToken() {
+  Future<bool> setAccessToken(UserTokenModel token) => preferences.setString(_accessToken, token.toJson());
+  
+  UserTokenModel? getAccessToken() {
     final String? token = preferences.getString(_accessToken);
-    return token != null ? AccessTokenModel.fromJson(token) : null;
+    return token != null ? UserTokenModel.fromJson(token) : null;
   }
 }

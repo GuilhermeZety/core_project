@@ -2,36 +2,36 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-class AccessTokenModel {
+class UserTokenModel {
   final String accessToken;
   final String clientId;
   final String grantTypes;
-  final int expiryIn;
+  final int expiresIn;
   final String tokenType;
   final DateTime updatedDate;
 
-  AccessTokenModel({
+  UserTokenModel({
     required this.accessToken,
     required this.clientId,
     required this.grantTypes,
-    required this.expiryIn,
+    required this.expiresIn,
     required this.tokenType,
     required this.updatedDate,
   });
 
-  AccessTokenModel copyWith({
+  UserTokenModel copyWith({
     String? accessToken,
     String? clientId,
     String? grantTypes,
-    int? expiryIn,
+    int? expiresIn,
     String? tokenType,
     DateTime? updatedDate,
   }) {
-    return AccessTokenModel(
+    return UserTokenModel(
       accessToken: accessToken ?? this.accessToken,
       clientId: clientId ?? this.clientId,
       grantTypes: grantTypes ?? this.grantTypes,
-      expiryIn: expiryIn ?? this.expiryIn,
+      expiresIn: expiresIn ?? this.expiresIn,
       tokenType: tokenType ?? this.tokenType,
       updatedDate: updatedDate ?? this.updatedDate,
     );
@@ -39,27 +39,27 @@ class AccessTokenModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'accessToken': accessToken,
-      'clientId': clientId,
-      'grantTypes': grantTypes,
-      'expiryIn': expiryIn,
-      'tokenType': tokenType,
-      'updatedDate': updatedDate.millisecondsSinceEpoch,
+      'access_token': accessToken,
+      'client_id': clientId,
+      'grant_types': grantTypes,
+      'expires_in': expiresIn,
+      'token_type': tokenType,
+      'updated_date': updatedDate.millisecondsSinceEpoch,
     };
   }
 
-  factory AccessTokenModel.fromMap(Map<String, dynamic> map) {
-    return AccessTokenModel(
-      accessToken: map['accessToken'] as String,
-      clientId: map['clientId'] as String,
-      grantTypes: map['grantTypes'] as String,
-      expiryIn: map['expiryIn'] as int,
-      tokenType: map['tokenType'] as String,
-      updatedDate: DateTime.fromMillisecondsSinceEpoch(map['updatedDate'] as int),
+  factory UserTokenModel.fromMap(Map<String, dynamic> map) {
+    return UserTokenModel(
+      accessToken: map['access_token'] as String,
+      clientId: map['client_id'] as String,
+      grantTypes: map['grant_types'] as String,
+      expiresIn: map['expires_in'] as int,
+      tokenType: map['token_type'] as String,
+      updatedDate: DateTime.fromMillisecondsSinceEpoch(map['updated_date'] as int),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory AccessTokenModel.fromJson(String source) => AccessTokenModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserTokenModel.fromJson(String source) => UserTokenModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

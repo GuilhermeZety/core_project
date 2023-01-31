@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      context.go(Routes.auth);
+      context.go(Routes.home);
     });
   }
   @override
@@ -29,7 +29,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(AppAssets.logo, width: 100, height: 100, color: Theme.of(context).textTheme.titleMedium!.color, fit: BoxFit.fitHeight,),
+            Hero(
+              tag: 'logo',
+              child: Image.asset(AppAssets.logo, width: 100, height: 100, color: Theme.of(context).textTheme.titleMedium!.color, fit: BoxFit.fitHeight,)
+            ),
             Gap(40),
             LoadingAnimationWidget.stretchedDots(color: Theme.of(context).textTheme.titleMedium!.color!, size: 60)
           ],

@@ -8,6 +8,8 @@ import 'package:core_project/core/common/constants/app_constants.dart';
 
 import 'package:core_project/core/common/constants/app_api_path.dart';
 
+import 'package:core_project/features/auth/data/models/auth_model.dart';
+
 class RequestService{
     RequestService._();
     static final RequestService _instance = RequestService._();
@@ -33,7 +35,7 @@ class RequestService{
             );
         }
 
-        final accessToken = await getToken();
+        final accessToken = await getUserToken();
         if(accessToken != null){
           _dio.options.headers['Authorization'] = 'Bearer ${accessToken.accessToken}';
         }
@@ -72,7 +74,7 @@ class RequestService{
             );
         }
         
-        final accessToken = await getToken();
+        final accessToken = await getUserToken();
         if(accessToken != null){
           _dio.options.headers['Authorization'] = 'Bearer ${accessToken.accessToken}';
         }
@@ -101,14 +103,14 @@ class RequestService{
       }
     }
 
-    Future<AccessTokenModel?> getToken() async {
+    Future<UserTokenModel?> getUserToken({AuthModel? auth}) async {
       try{
         if(await ConnectionChecker().hasConnection == false) return null;
 
         final accessToken = cache.getAccessToken();
         
         if(accessToken != null){
-          if(accessToken.updatedDate.add(Duration(seconds: accessToken.expiryIn)).isAfter(DateTime.now())){
+          if(accessToken.updatedDate.add(Duration(seconds: accessToken.expiresIn)).isAfter(DateTime.now())){
             return accessToken;
           }
         }
@@ -131,7 +133,9 @@ class RequestService{
           throw SyncExceptions(message: 'Error on get token');
         }
         else{
-          return AccessTokenModel.fromJson(response.data) ;
+          UserTokenModel token =UserTokenModel.fromJson(response.data);
+          cache.setAccessToken(token);
+          return token;
         }
       }
       catch(err){

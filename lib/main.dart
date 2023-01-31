@@ -14,6 +14,8 @@ import 'package:core_project/core/common/services/request_service.dart';
 
 import 'package:core_project/core/logic/cache_logic.dart';
 
+import 'package:core_project/core/common/services/current_session.dart';
+
 
 
 void main() async {
@@ -27,11 +29,13 @@ void main() async {
   ///
 
   ///Configure the app
+  ///
   ServiceLocators.setup();
   RequestService().setup();
   CacheLogic().setInstanceCache();
   
   await settingsLogic.load();
+  await CurrentSession().updateCurrentUser();
   ///
   
   runApp(AppWidget());
@@ -56,6 +60,7 @@ class AppWidget extends StatelessWidget with GetItMixin{
       supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
+      // themeMode: ThemeMode.light,
       themeMode: themeMode,
       debugShowCheckedModeBanner: false,
     );
