@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 extension ToMaterialStateProperty on Color{
-  MaterialStateProperty toMaterialStateProperty(){
+  MaterialStateProperty<Color?>? toMaterialStateProperty(){
     return MaterialStateProperty.all<Color?>(this);
   }
 }

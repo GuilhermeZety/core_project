@@ -46,12 +46,12 @@ class SettingsLogic with ThrottledSaveLoadMixin {
 ThemeMode makeThemeMode(String? theme){
     switch(theme){
       case 'ThemeMode.system':
-        return ThemeMode.system;
+        return ThemeMode.light;
       case 'ThemeMode.light':
         return ThemeMode.light;
       case 'ThemeMode.dark':
         return ThemeMode.dark;
       default:
-        return ThemeMode.system;
+        return ThemeMode.light;
     }
   }

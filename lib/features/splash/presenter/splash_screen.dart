@@ -31,10 +31,10 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Hero(
               tag: 'logo',
-              child: Image.asset(AppAssets.logo, width: 100, height: 100, color: Theme.of(context).textTheme.titleMedium!.color, fit: BoxFit.fitHeight,)
+              child: Image.asset(AppAssets.logo, width: 100, height: 100, color: Theme.of(context).colorScheme.inverseSurface, fit: BoxFit.fitHeight,)
             ),
             Gap(40),
-            LoadingAnimationWidget.stretchedDots(color: Theme.of(context).textTheme.titleMedium!.color!, size: 60)
+            LoadingAnimationWidget.stretchedDots(color: Theme.of(context).colorScheme.inverseSurface, size: 60)
           ],
         )
       ),

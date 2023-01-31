@@ -1,58 +1,47 @@
-import 'package:core_project/core/common/translated.dart';
-import 'package:core_project/main.dart';
+import 'package:core_project/features/init/presenter/init_screen.dart';
+import 'package:core_project/ui/components/bars/custom_appbar.dart';
+import 'package:core_project/ui/components/bars/custom_navigationbar.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget{
   const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+  
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
+  int selectedIndexPage = 0;
+  late TabController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    controller = TabController(
+      length: 4,
+      vsync: this,
+    )..addListener(() {setState(() {});});
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('Core'),
-      ),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(Translated()!.salve),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () => settingsLogic.changeThemeMode(ThemeMode.light), 
-                    child: Text('Change Theme To Light')
-                  ),
-                  TextButton(onPressed: () {
-                    settingsLogic.changeThemeMode(ThemeMode.dark);
-
-                  }, child: Text('Change Theme To dark')),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(onPressed: () async {
-                    await settingsLogic.changeLocale(context, Locale('en'));
-
-                  }, child: Text('Change Locale To EN')),
-                  TextButton(onPressed: () {
-                    settingsLogic.changeLocale(context, Locale('pt'));
-
-                  }, child: Text('Change Locale To PT')),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: CustomAppBar.logo(),
+      bottomNavigationBar: CustomNavigationBar(controller: controller, notifications: 10),
+      body: TabBarView(
+        controller: controller,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          InitScreen(),
+          Container(color: Colors.grey.shade200,),
+          Container(color: Colors.grey.shade100,),
+          Container(color: Colors.white,),
+        ],
+      )
     );
   }
 }

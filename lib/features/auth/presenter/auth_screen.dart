@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:core_project/core/common/constants/app_assets.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,13 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+
+  @override
+  void initState() {
+    log('init');
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
             Expanded(
               child: Hero(
                 tag: 'logo',
-                child: Image.asset(AppAssets.logo, width: 100, color: Theme.of(context).textTheme.titleMedium!.color)
+                child: Image.asset(AppAssets.logo, width: 100, color: Theme.of(context).colorScheme.inverseSurface)
               ),
             ),
             SizedBox(

@@ -69,7 +69,7 @@ class AppWidget extends StatelessWidget with GetItMixin{
 
 /// Set the public variables and logic to be used in the app
 final getIt = GetIt.instance;
-final globalContext = GlobalKey<ScaffoldMessengerState>();
+var globalContext = GlobalKey<ScaffoldMessengerState>();
 
 SettingsLogic get settingsLogic => getIt.get<SettingsLogic>();
 ///
