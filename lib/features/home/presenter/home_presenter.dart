@@ -3,15 +3,15 @@ import 'package:core_project/ui/components/bars/custom_appbar.dart';
 import 'package:core_project/ui/components/bars/custom_navigationbar.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget{
-  const HomeScreen({super.key});
+class HomePresenter extends StatefulWidget{
+  const HomePresenter({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePresenter> createState() => _HomePresenterState();
   
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
+class _HomePresenterState extends State<HomePresenter> with TickerProviderStateMixin{
   int selectedIndexPage = 0;
   late TabController controller;
 
@@ -32,15 +32,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: CustomAppBar.logo(),
       bottomNavigationBar: CustomNavigationBar(controller: controller, notifications: 10),
-      body: TabBarView(
-        controller: controller,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
-          InitScreen(),
-          Container(color: Colors.grey.shade200,),
-          Container(color: Colors.grey.shade100,),
-          Container(color: Colors.white,),
-        ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: TabBarView(
+          controller: controller,
+          physics: NeverScrollableScrollPhysics(),
+          children: const [
+            InitScreen(),
+            Center(child: Text('Fidelidade')),
+            Center(child: Text('Notificacoes')),
+            Center(child: Text('Mais'))
+          ],
+        ),
       )
     );
   }

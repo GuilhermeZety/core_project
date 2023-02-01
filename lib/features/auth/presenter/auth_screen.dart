@@ -1,9 +1,21 @@
 import 'dart:developer';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:core_project/core/common/constants/app_assets.dart';
-import 'package:flextras/flextras.dart';
+import 'package:core_project/core/common/input_validations.dart';
+import 'package:core_project/features/auth/presenter/cubits/auth_cubit.dart';
+import 'package:core_project/ui/components/inputs/text_input.dart';
+import 'package:core_project/ui/components/panels.dart';
+import 'package:extra_alignments/extra_alignments.dart';
 import 'package:flutter/material.dart';
-import 'package:sized_context/sized_context.dart';
+import 'package:gap/gap.dart';
+
+import 'package:core_project/ui/components/buttons.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:core_project/routes.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -13,6 +25,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  AuthCubit cubit = AuthCubit();
 
   @override
   void initState() {
@@ -23,93 +36,104 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: context.widthPx,
-        height: context.heightPx,
-        child: 
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Stack(
           children: [
-            Expanded(
-              child: Hero(
-                tag: 'logo',
-                child: Image.asset(AppAssets.logo, width: 100, color: Theme.of(context).colorScheme.inverseSurface)
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 100),
+                child: Hero(
+                  tag: 'logo',
+                  child: TopCenter(child: Image.asset(AppAssets.logo, width: 100, color: Theme.of(context).colorScheme.inverseSurface))
+                ),
               ),
             ),
-            SizedBox(
-              height: 350,
-              child: SeparatedColumn(
-                separatorBuilder: () {
-                  return SizedBox(height: 20);
-                },
+            BottomCenter(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Wellcome!', style: TextStyle(fontSize: 20),),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                      ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Email',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
+                  Panel.primary(
+                    child: SizedBox(
+                      height: 300,
+                      child: BlocConsumer<AuthCubit, AuthState>(
+                        bloc: cubit,
+                        listener: (context, state) {
+                          if (state is AuthSuccess) {
+                            context.go(Routes.home);
+                          }
+                          if (state is AuthError) {
+                            setState(() {});
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is AuthLoading) {
+                            return Center(child: LoadingAnimationWidget.stretchedDots(color: Theme.of(context).colorScheme.inverseSurface, size: 60));
+                          }
+                          return Column(
+                            children: [
+                              Text('Welcome', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                              Gap(20),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20),
+                                child: Form(
+                                  key: cubit.formKey,
+                                  autovalidateMode: cubit.formValidated ? AutovalidateMode.onUserInteraction : null,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextInput(
+                                        cubit.emailController, 
+                                        validation: InputValidations.inputEmailValidation, 
+                                        label: Text('Email'),
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 20),
-                                  TextField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Password',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(20),
+                                      Gap(10),
+                                      TextInput.password(
+                                        cubit.passwordController, 
+                                        label: Text('Senha'),
+                                        validation: InputValidations.inputPasswordValidation,
                                       ),
-                                    ),
+                                      
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    
-                                    onPressed: () {},
-                                    child: Text('Login'),
-                                  ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 20),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Button.primary(onPressed: cubit.login, child: Text('Login')).expanded(),
+                                      ],
+                                    ),
+                                    SizedBox(height: 20),
+                                    TextButton(
+                                      onPressed: () {},
+                                      child: Text('Forgot password?'),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 20),
-                                TextButton(
-                                  onPressed: () {},
-                                  child: Text('Forgot password?'),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                              ),
+                            ],
+                          );
+                        },
+                      )
                     ),
                   ),
                 ],
               ),
-            ),
+            )
           ],
-        )
+        ),
       )
     );
+  }
+
+  @override
+  void dispose() {
+    cubit.close();
+    super.dispose();
   }
 }

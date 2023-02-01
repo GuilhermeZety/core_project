@@ -11,8 +11,7 @@ class AppTheme{
       secondaryContainer: AppColors.grey_100,
       tertiary: AppColors.grey_100,
       appBarColor: AppColors.yellow_500,
-      error: AppColors.red_500,
-      
+      error: AppColors.red_500,      
     ),
     appBarBackground: AppColors.yellow_500,
     surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,

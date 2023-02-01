@@ -1,18 +1,20 @@
 import 'package:core_project/core/common/translated.dart';
+import 'package:core_project/features/init/cubit/init_cubit.dart';
 import 'package:core_project/ui/components/bars/custom_bottom_appbar.dart';
 import 'package:core_project/ui/components/buttons.dart';
 import 'package:core_project/ui/components/custom_checkbox.dart';
+import 'package:core_project/ui/components/dialogs/custom_dialogs.dart';
+import 'package:core_project/ui/components/inputs/text_input.dart';
+import 'package:core_project/ui/components/panels.dart';
 import 'package:core_project/ui/components/subscaffold.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 
-import 'package:core_project/ui/components/panels.dart';
-import 'package:gap/gap.dart';
 
 import 'package:core_project/main.dart';
+import 'package:gap/gap.dart';
 import 'package:sized_context/sized_context.dart';
 
-import 'package:core_project/ui/components/dialogs/custom_dialogs.dart';
 
 class InitScreen extends StatefulWidget {
   const InitScreen({super.key});
@@ -22,14 +24,12 @@ class InitScreen extends StatefulWidget {
 }
 
 class _InitScreenState extends State<InitScreen> {
-  bool isLoading = true;
+  InitCubit cubit = InitCubit();
 
   @override
   void initState() {
+    cubit.init();
     super.initState();
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override
@@ -42,12 +42,12 @@ class _InitScreenState extends State<InitScreen> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Panel.primary(
-                isLoading: isLoading,
+                isLoading: cubit.isLoading,
                 size: Size(double.infinity, 160),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(Translated()!.salve),
+                    Center(child: Text(Translated.salve)),
                     SeparatedRow(
                       separatorBuilder: () => Gap(10),
                       children: [
@@ -68,19 +68,16 @@ class _InitScreenState extends State<InitScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Button.primary(
-                                  onPressed: () => settingsLogic.changeLocale(
-                                      context, Locale('en')),
-                                  child: Text('Change Locale To EN'))
-                              .expanded(),
+                            onPressed: () => settingsLogic.changeLocale(context, Locale('en')),
+                            child: Text('Change Locale To EN')
+                          ).expanded(),
                           Button.secondary(
-                                  onPressed: () => settingsLogic.changeLocale(
-                                      context, Locale('pt')),
-                                  child: Text('Change Locale To PT'))
-                              .expanded(),
+                            onPressed: () => settingsLogic.changeLocale(context, Locale('pt')),
+                            child: Text('Change Locale To PT')
+                          ).expanded(),
                         ],
                       ),
                     )
-
                   ],
                 ),
               ),
@@ -95,7 +92,6 @@ class _InitScreenState extends State<InitScreen> {
                 return Panel.primary(isLoading: true, size: Size(context.widthPx - 40, 140),);
               },
             ),
-
             Panel.secondary(
               child: Button.primary(
                 child: Text('Show Dialog'),
@@ -110,15 +106,24 @@ class _InitScreenState extends State<InitScreen> {
                 ).show(context)
               ),
             ),
-
             Switch(
               value: true,
               onChanged: (_) {},
             ),
-            CustomCheckBox(value: true, onChanged: (_) {})
+            CustomCheckBox(value: true, onChanged: (_) {}),
+            Padding( 
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextInput(TextEditingController()),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextInput.password(TextEditingController(), label: Text('asdasds'),),
+            ),
+            SizedBox(height: 200)
           ],
         ),
       ),
     );
   }
+  
 }

@@ -48,22 +48,25 @@ class Panel extends StatelessWidget {
       );
     }
     
-    return Container(
-      // height: size?.height ?? double.infinity,
-      decoration: BoxDecoration(
-        color: !secondary ? colorScheme.primaryContainer : colorScheme.secondaryContainer,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: withShadow ? [
-          BoxShadow(
-            color: Theme.of(context).colorScheme.tertiary,
-            spreadRadius: 0,
-            blurRadius: 7,
-            offset: Offset(0, 0), // changes position of shadow
-          ),
-        ] : [],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Container(
+        // height: size?.height ?? double.infinity,
+        decoration: BoxDecoration(
+          color: !secondary ? colorScheme.primaryContainer : colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: withShadow ? [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.tertiary,
+              spreadRadius: 0,
+              blurRadius: 7,
+              offset: Offset(0, 0), // changes position of shadow
+            ),
+          ] : [],
+        ),
+        padding: padding,
+        child: child,
       ),
-      padding: padding,
-      child: child,
     );
   }
 }

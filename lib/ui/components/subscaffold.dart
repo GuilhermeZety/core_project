@@ -13,19 +13,22 @@ class SubScaffold extends StatefulWidget {
 class _SubScaffoldState extends State<SubScaffold> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: widget.body,
-        ),
-        if (widget.bottom != null)
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: widget.bottom ?? SizedBox(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: widget.body,
           ),
-      ],
+          if (widget.bottom != null)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: widget.bottom ?? SizedBox(),
+            ),
+        ],
+      ),
     );
   }
 }

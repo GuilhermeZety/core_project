@@ -116,7 +116,8 @@ class _TextInputState extends State<TextInput> {
         minLines: isValueVisible ? 1 : widget.lines ?? 1,
         maxLines: isValueVisible ? 1 : 10,  
         decoration:  InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          label: widget.label,
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
           suffix: widget.isLoading != null ? 
           widget.isLoading == true ? 
           const SizedBox(

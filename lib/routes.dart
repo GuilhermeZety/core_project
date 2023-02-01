@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
-import 'package:core_project/features/home/presenter/home_screen.dart';
+import 'package:core_project/features/home/presenter/home_presenter.dart';
 
 class Routes {
   // routes for the app
@@ -32,7 +32,7 @@ class Routes {
       GoRoute(
         path: Routes.home,
         builder: (BuildContext context, GoRouterState state) {
-          return HomeScreen();
+          return HomePresenter();
         },
       ),
     ],

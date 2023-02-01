@@ -1,6 +1,6 @@
+import 'package:core_project/ui/components/inputs/search_input.dart';
 import 'package:flutter/material.dart';
 
-import 'package:core_project/ui/components/inputs/text_input.dart';
 
 import 'package:core_project/core/common/constants/app_assets.dart';
 
@@ -35,9 +35,9 @@ class CustomAppBar extends StatefulWidget  implements PreferredSizeWidget{
     this.isLogo = false, 
     this.back = true,
     this.backAction,
-    this.sufix = true,
+    this.sufix = false,
     this.sufixAction, 
-    this.isSearch, 
+    this.isSearch = true, 
     this.actionSearch
   });
   
@@ -77,9 +77,16 @@ class _CustomAppBarState extends State<CustomAppBar> {
             onPressed: widget.sufixAction ?? () {},
           ),
         )
-      ] : null,
+      ] : null,      
       title: widget.isSearch == true ?
-        TextInput(TextEditingController(), showError: false, size: Size(double.infinity, 40),) 
+        Padding(
+          padding: const EdgeInsets.only(right: 40),
+          child: SearchInput(
+            TextEditingController(), 
+            showError: false, 
+            size: Size(double.infinity, 40),
+          ),
+        ) 
         :
         widget.isLogo ? 
           Image.asset(AppAssets.logo, height: 40, color: Theme.of(context).colorScheme.inverseSurface) 

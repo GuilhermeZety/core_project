@@ -60,7 +60,6 @@ class AppWidget extends StatelessWidget with GetItMixin{
       supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      // themeMode: ThemeMode.light,
       themeMode: themeMode,
       debugShowCheckedModeBanner: false,
     );
