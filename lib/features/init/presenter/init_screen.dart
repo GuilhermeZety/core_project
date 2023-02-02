@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 
 import 'package:core_project/main.dart';
 import 'package:gap/gap.dart';
+import 'package:simple_rich_text/simple_rich_text.dart';
 import 'package:sized_context/sized_context.dart';
 
 
@@ -83,16 +84,42 @@ class _InitScreenState extends State<InitScreen> {
                 ),
               ),
             ),
-            Image.network(
-              'https://www.sefram.com/images/products/photos/hi_res/7352B.jpg',
-              fit: BoxFit.fitHeight,
-              height: 150,
-              width: context.widthPx- 40,
-              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Panel.primary(isLoading: true, size: Size(context.widthPx - 40, 140),);
-              },
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              width: context.widthPx,
+              height: 220,
+              child: GridView.count(
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                children: [
+                  Panel.primary(
+                    child: Image.network(
+                      'https://www.sefram.com/images/products/photos/hi_res/7352B.jpg',
+                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Panel.primary(isLoading: true,);
+                      },
+                    ),
+                  ),
+                  Panel.primary(
+                    child: Image.network(
+                      'https://www.sefram.com/images/products/photos/hi_res/7352B.jpg',
+                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Panel.primary(isLoading: true,);
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
+            Panel.primary(
+              child: SimpleRichText(
+                'Testando o ~{fontSize:16; color:#ff660000}RichText~ ', style: TextStyle(color: Colors.black),),
+            ),
+            Gap(10),
             Panel.secondary(
               child: Button.primary(
                 child: Text('Show Dialog'),

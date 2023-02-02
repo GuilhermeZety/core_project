@@ -7,6 +7,7 @@ class Failure {
 
   Failure(this.message);
 
+ /// It's a getter that returns an exception based on the message.
   AppFailures get exception => (() {
     switch(message) {
       case 'Não foi possível encontrar o usuário':

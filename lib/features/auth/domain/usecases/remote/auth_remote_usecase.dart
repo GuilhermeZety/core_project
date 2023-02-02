@@ -5,5 +5,6 @@ import 'package:core_project/features/auth/errors/auth/auth_failure.dart';
 import 'package:core_project/features/auth/domain/entities/auth_entity.dart';
 
 abstract class AuthRemoteUsecase {
+  /// A function that returns a Future of Either of AuthFailure or UserEntity.
   Future<Either<AuthFailure, UserEntity>> call(AuthEntity auth);
 }

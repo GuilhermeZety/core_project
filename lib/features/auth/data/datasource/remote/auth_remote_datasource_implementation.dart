@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:core_project/core/common/models/access_token_model.dart';
+import 'package:core_project/core/common/models/user_token_model.dart';
 import 'package:core_project/core/common/path.dart';
 import 'package:core_project/core/common/services/request_service.dart';
 import 'package:core_project/core/shared/user/data/models/user_model.dart';

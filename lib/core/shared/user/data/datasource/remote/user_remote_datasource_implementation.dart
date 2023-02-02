@@ -8,6 +8,10 @@ class UserRemoteDatasourceImplementation implements UserRemoteDatasource {
   // final RequestService _service = RequestService();
 
   @override
+  /// It returns a token for the user.
+  /// 
+  /// Args:
+  ///   user `(UserModel)`: The user object that you want to get the token for.
   Future<String> getToken(UserModel user) async {
     try {
       //TODO: Remover código abaixo após disponibilizar api

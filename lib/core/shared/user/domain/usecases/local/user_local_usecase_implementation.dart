@@ -13,6 +13,7 @@ class UserLocalUsecaseImplementation implements UserLocalUsecase {
     required UserLocalRepository repository
   }): _repository = repository;
 
+
   @override
   Future<Either<AuthFailure, int>> store(UserModel user) {
     return _repository.store(user);

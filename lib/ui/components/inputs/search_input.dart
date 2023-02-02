@@ -64,7 +64,7 @@ class SearchInput extends StatelessWidget {
           hintText: hint,
           hintStyle: const TextStyle(color: Colors.black38),
           errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.red_500),
+            borderSide: BorderSide(width: 1, color: AppColors.errorColor),
             borderRadius: BorderRadius.circular(10.0),
           ),
           focusedBorder:OutlineInputBorder(
@@ -84,7 +84,7 @@ class SearchInput extends StatelessWidget {
             borderSide: BorderSide(width: 1, color: AppColors.grey_100),
             borderRadius: BorderRadius.circular(10.0),
           ),         
-          errorStyle: TextStyle(fontWeight: FontWeight.bold, color: AppColors.red_500)              
+          errorStyle: TextStyle(fontWeight: FontWeight.bold, color: AppColors.errorColor)              
         )
       ),
     );

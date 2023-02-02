@@ -12,6 +12,9 @@ class DatabaseHandler {
 
   Future<Database> getDatabase() async => await openDatabase(AppConstants.dbPath);
 
+
+
+  /// It creates the tables in the database.
   Future<void> createTables() async {
     final Database database = await getDatabase();
   
@@ -46,6 +49,8 @@ class DatabaseHandler {
   }
 }
 
+
+/// An extension method that is used to count the number of rows in a table.
 extension Count on Database {
   Future<int> count(String table, {String? aditionalWhere}) async {
     try{

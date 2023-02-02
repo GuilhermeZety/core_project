@@ -1,3 +1,5 @@
+import 'package:core_project/core/common/models/user_token_model.dart';
+
 class UserEntity {
   final int id;
   final String name;
@@ -6,7 +8,7 @@ class UserEntity {
   final String? birthDate;
   final String? picture;
 
-  final UserAuthEntity userAuth;
+  final UserTokenModel userAuth;
 
   UserEntity({
     required this.id,
@@ -17,23 +19,4 @@ class UserEntity {
     this.picture,
     required this.userAuth,
   });  
-}
-
-class UserAuthEntity {
-  final String clientId;
-  final String clientSecret;
-  final String grantTypes;
-  final String accessToken;
-  final int expiresIn;
-  final String tokenType;
-
-  UserAuthEntity({
-    required this.clientId,
-    required this.clientSecret,
-    required this.grantTypes,
-    required this.accessToken,
-    required this.expiresIn,
-    required this.tokenType
-  });
-
 }

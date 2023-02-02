@@ -2,12 +2,24 @@
 import 'package:flutter/material.dart';
 
 extension ToMaterialStateProperty on Color{
+  /// `MaterialStateProperty.all<Color?>(this)`
+  /// 
+  /// The `this` keyword is a special keyword in Dart that refers to the current instance of the class.
+  /// In this case, the current instance of the class is the `Color` class
+  /// 
+  /// Returns:
+  ///   A MaterialStateProperty<Color?>
   MaterialStateProperty<Color?>? toMaterialStateProperty(){
     return MaterialStateProperty.all<Color?>(this);
   }
 }
 
+
 extension ToMaterialColor on Color {
+ /// It takes a color and returns a MaterialColor with 10 shades of that color
+ /// 
+ /// Returns:
+ ///   A MaterialColor object.
   MaterialColor toMaterialColor() {
     final color = this;
 

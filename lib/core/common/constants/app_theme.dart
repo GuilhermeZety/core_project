@@ -2,18 +2,19 @@ import 'package:core_project/core/common/constants/app_colors.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
+/// > A class that contains all the colors used in the app
 class AppTheme{
   static ThemeData get light => FlexThemeData.light(
     colors: FlexSchemeColor(
-      primary: AppColors.yellow_500,
+      primary: AppColors.primaryColor,
       primaryContainer: Colors.white,
-      secondary: AppColors.yellow_400,
+      secondary: AppColors.primaryColorLight,
       secondaryContainer: AppColors.grey_100,
       tertiary: AppColors.grey_100,
-      appBarColor: AppColors.yellow_500,
-      error: AppColors.red_500,      
+      appBarColor: AppColors.primaryColor,
+      error: AppColors.errorColor,      
     ),
-    appBarBackground: AppColors.yellow_500,
+    appBarBackground: AppColors.primaryColor,
     surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
     blendLevel: 9,
     // tabBarStyle: null,
@@ -33,13 +34,13 @@ class AppTheme{
 
   static ThemeData get dark => FlexThemeData.dark(   
     colors: FlexSchemeColor(
-      primary: AppColors.yellow_500,
+      primary: AppColors.primaryColor,
       primaryContainer: AppColors.grey_900,      
-      secondary: Color(0xffffb59c),
+      secondary: AppColors.primaryColorLight,
       secondaryContainer: AppColors.grey_800,
       tertiary: Colors.black,
       appBarColor: Color(0xff783116),
-      error: Color(0xffcf6679),
+      error: AppColors.errorColor,
     ),
     surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
     blendLevel: 15,

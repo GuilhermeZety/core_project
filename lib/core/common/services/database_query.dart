@@ -4,6 +4,7 @@ class DatabaseQuery {
   final Transaction transaction;
   DatabaseQuery(this.transaction);
 
+  /// It creates a user table if it doesn't exist
   Future<void> createUserTable() async {
     await transaction.execute(
       '''

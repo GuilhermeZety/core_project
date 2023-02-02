@@ -15,6 +15,7 @@ class Routes {
   /// Configure the routes for the app
   static GoRouter get routesConfig => _router;
 
+  /// The router for the app
   static final GoRouter _router = GoRouter(
     routes: <RouteBase>[
       GoRoute(

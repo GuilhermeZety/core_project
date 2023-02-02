@@ -16,6 +16,11 @@ import 'package:core_project/core/common/services/current_session.dart';
 class UserLocalDatasourceImplementation implements UserLocalDatasource {
   final DatabaseHandler databaseHandler = DatabaseHandler();
 
+  /// It stores a user in the database.
+  /// 
+  /// Args:
+  ///   user (UserModel): The user model to be stored.
+  ///   logged: 1 if the user is logged in, 0 if not. Defaults to 1
   @override
   Future<int> store(UserModel user, {logged = 1}) async {
     try {
@@ -30,7 +35,7 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
       /// Stores the user auth data
       await database.insert(
         'autenticacao', 
-        (user.userAuth as UserAuthModel).toMapWith({'usuario_id': user.id}), 
+        user.userAuth.toMapWith({'usuario_id': user.id}), 
         conflictAlgorithm: ConflictAlgorithm.replace
       );
     }
@@ -41,6 +46,10 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
     return user.id;
   }
 
+  /// It returns a Future<UserModel> object.
+  /// 
+  /// Args:
+  ///   id (int): The id of the user you want to get.
   @override
   Future<UserModel> get(int id) async {
     try {
@@ -67,6 +76,7 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
     }
   }
 
+  /// It updates the user data.
   @override
   Future<void> update(UserModel user, bool logged) async {
     try{
@@ -77,6 +87,7 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
     }
   }
 
+  /// It returns the logged user.
   @override
   Future<UserModel> getLogged() async {
     try {
@@ -96,6 +107,7 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
   }
 
   @override
+  /// It returns true if the user is logged in, false if not.
   Future<bool> exists() async {
     try {
       final database = await databaseHandler.getDatabase();    
@@ -117,6 +129,7 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
   }
   
   @override
+  /// It deletes the user from the database.
   Future<void> truncate() async {
     try {
       CurrentSession session = CurrentSession();

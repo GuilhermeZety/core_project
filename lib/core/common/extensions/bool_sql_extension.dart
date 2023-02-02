@@ -1,3 +1,4 @@
+/// Extending the bool class with a new method called `toNumber()`
 extension ToSql on bool{
   int toNumber(){
     switch (this){
@@ -11,6 +12,7 @@ extension ToSql on bool{
   }
 }
 
+/// Extending the int class with a new method called `toBool()`
 extension FromSql on int{
   bool toBool(){
     switch (this){

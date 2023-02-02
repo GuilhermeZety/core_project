@@ -15,7 +15,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      color: AppColors.yellow_500.withOpacity(0.9),
+      color: AppColors.primaryColor.withOpacity(0.9),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [

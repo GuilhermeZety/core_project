@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 
 import 'package:core_project/core/common/constants/app_assets.dart';
-
 class CustomAppBar extends StatefulWidget  implements PreferredSizeWidget{
   const CustomAppBar({
     super.key, 

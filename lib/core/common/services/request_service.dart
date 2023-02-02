@@ -1,4 +1,4 @@
-import 'package:core_project/core/common/models/access_token_model.dart';
+import 'package:core_project/core/common/models/user_token_model.dart';
 import 'package:core_project/core/common/services/connection_checker_service.dart';
 import 'package:core_project/core/logic/cache_logic.dart';
 import 'package:core_project/core/logic/errors/app_exceptions.dart';
@@ -102,13 +102,21 @@ class RequestService{
         rethrow;
       }
     }
-
+    
+   /// It gets the user token from the server.
+   /// 
+   /// Args:
+   ///   auth (AuthModel): This is the authentication model that you will use to authenticate the user.
+   /// 
+   /// Returns:
+   ///   A Future<UserTokenModel?>
     Future<UserTokenModel?> getUserToken({AuthModel? auth}) async {
       try{
         if(await ConnectionChecker().hasConnection == false) return null;
 
         final accessToken = cache.getAccessToken();
         
+       /// Checking if the token is still valid.
         if(accessToken != null){
           if(accessToken.updatedDate.add(Duration(seconds: accessToken.expiresIn)).isAfter(DateTime.now())){
             return accessToken;

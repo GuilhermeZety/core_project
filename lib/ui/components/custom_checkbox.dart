@@ -27,7 +27,7 @@ class CustomCheckBox extends StatefulWidget {
     required this.value,
     required this.onChanged,
     this.checkedIconColor = Colors.white,
-    this.checkedFillColor = AppColors.yellow_500,
+    this.checkedFillColor = AppColors.primaryColor,
     this.checkedIcon = Icons.check,
     this.uncheckedIconColor = Colors.transparent,
     this.uncheckedFillColor = AppColors.grey_200,

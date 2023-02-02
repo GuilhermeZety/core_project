@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 class Toasting{
+  /// It shows a toast message on the screen.
+  /// 
+  /// Args:
+  ///   message (String): The message you want to display
+  ///   color (Color): The color of the toast.
   static void showToast(String message, Color color){
     Fluttertoast.cancel();
     Fluttertoast.showToast(

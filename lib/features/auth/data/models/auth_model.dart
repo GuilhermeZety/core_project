@@ -12,17 +12,17 @@ class AuthModel extends AuthEntity {
 
   Map<String, dynamic> toMap() {
     return {
-      'registration': registration,
-      'password': password,
-      'notificationHash': notificationHash,
+      'matricula': registration,
+      'senha': password,
+      'hashNotificacao': notificationHash,
     };
   }
 
   factory AuthModel.fromMap(Map<String, dynamic> map) {
     return AuthModel(
-      registration: map['registration'] ?? '',
-      password: map['password'] ?? '',
-      notificationHash: map['notificationHash'] ?? '',
+      registration: map['matricula'] ?? '',
+      password: map['senha'] ?? '',
+      notificationHash: map['hashNotificacao'] ?? '',
     );
   }
 

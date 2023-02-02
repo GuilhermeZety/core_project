@@ -2,6 +2,7 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+/// A model class for the user token.
 class UserTokenModel {
   final String accessToken;
   final String clientId;
@@ -18,6 +19,12 @@ class UserTokenModel {
     required this.tokenType,
     required this.updatedDate,
   });
+
+  Map<String, dynamic> toMapWith(Map<String, dynamic> data) {
+    final map = toMap();
+    map.addAll(data);
+    return map;
+  }
 
   UserTokenModel copyWith({
     String? accessToken,

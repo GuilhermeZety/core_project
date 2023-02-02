@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:core_project/core/common/models/user_token_model.dart';
 import 'package:core_project/core/shared/user/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity{
@@ -38,7 +39,7 @@ class UserModel extends UserEntity{
       email: map['usuario']['email'] ?? '',
       birthDate: map['usuario']['dataNascimento'],
       picture: map['usuario']['foto'],
-      userAuth: UserAuthModel.fromMap(map['autenticacao']),
+      userAuth: UserTokenModel.fromMap(map['autenticacao']),
     );
   }
 
@@ -50,7 +51,7 @@ class UserModel extends UserEntity{
     String? email,
     String? birthDate,
     String? picture,
-    UserAuthEntity? userAuth,
+    UserTokenModel? userAuth,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -67,47 +68,4 @@ class UserModel extends UserEntity{
 
   factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source));
 
-}
-
-class UserAuthModel extends UserAuthEntity{
-  UserAuthModel({
-    required super.clientId,
-    required super.clientSecret,
-    required super.grantTypes,
-    required super.accessToken,
-    required super.expiresIn,
-    required super.tokenType
-  });
-
-   Map<String, dynamic> toMap() {
-    return {
-      'client_id': clientId,
-      'client_secret': clientSecret,
-      'grant_types': grantTypes,
-      'access_token': accessToken,
-      'expires_in': expiresIn,
-      'token_type': tokenType,
-    };
-  }
-
-  Map<String, dynamic> toMapWith(Map<String, dynamic> data) {
-    final map = toMap();
-    map.addAll(data);
-    return map;
-  }
-
-  factory UserAuthModel.fromMap(Map<String, dynamic> map) {
-    return UserAuthModel(
-      clientId: map['client_id'] ?? '',
-      clientSecret: map['client_secret'] ?? '',
-      grantTypes: map['grant_types'] ?? '',
-      accessToken: map['access_token'] ?? '',
-      expiresIn: map['expires_in']?.toInt() ?? 0,
-      tokenType: map['token_type'] ?? '',
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory UserAuthModel.fromJson(String source) => UserAuthModel.fromMap(json.decode(source));
 }

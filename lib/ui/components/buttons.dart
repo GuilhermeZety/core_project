@@ -56,7 +56,7 @@ class Button extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       )
     ),
-    backgroundColor: AppColors.yellow_500.toMaterialStateProperty(),
+    backgroundColor: AppColors.primaryColor.toMaterialStateProperty(),
     foregroundColor: Colors.black.toMaterialStateProperty(),
     textStyle: MaterialStateProperty.all<TextStyle?>(TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
   );

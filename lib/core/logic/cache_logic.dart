@@ -1,4 +1,4 @@
-import 'package:core_project/core/common/models/access_token_model.dart';
+import 'package:core_project/core/common/models/user_token_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheLogic{
@@ -18,8 +18,15 @@ class CacheLogic{
   ///Paths
   final String _accessToken = 'accessToken';
 
+  
+  
+  /// It saves the token to the shared preferences.
+  /// 
+  /// Args:
+  ///   token (UserTokenModel): The token to be saved.
   Future<bool> setAccessToken(UserTokenModel token) => preferences.setString(_accessToken, token.toJson());
   
+  /// If the user is logged in, return their access token, otherwise return null.
   UserTokenModel? getAccessToken() {
     final String? token = preferences.getString(_accessToken);
     return token != null ? UserTokenModel.fromJson(token) : null;
