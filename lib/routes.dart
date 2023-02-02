@@ -16,6 +16,9 @@ class Routes {
   static GoRouter get routesConfig => _router;
 
   /// The router for the app
+  /// TODO: Routes
+  /// 
+  /// context.go(Routes.splash, );
   static final GoRouter _router = GoRouter(
     routes: <RouteBase>[
       GoRoute(

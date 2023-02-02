@@ -19,7 +19,7 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
   /// It stores a user in the database.
   /// 
   /// Args:
-  ///   user (UserModel): The user model to be stored.
+  ///   user (`UserModel`): The user model to be stored.
   ///   logged: 1 if the user is logged in, 0 if not. Defaults to 1
   @override
   Future<int> store(UserModel user, {logged = 1}) async {
@@ -46,10 +46,13 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
     return user.id;
   }
 
-  /// It returns a Future<UserModel> object.
+  /// It returns the user data.
   /// 
   /// Args:
-  ///   id (int): The id of the user you want to get.
+  ///  id (`int`): The user id.
+  /// 
+  /// Returns:
+  /// `UserModel`: The user data.
   @override
   Future<UserModel> get(int id) async {
     try {

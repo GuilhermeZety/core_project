@@ -1,18 +1,20 @@
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/services.dart';
 part 'init_state.dart';
-
+//TODO: Cubit
+// Continua o mesmo
 class InitCubit extends Cubit<InitState> {
   InitCubit(): super(InitInitial());
 
-  bool isLoading = true;
-
-  List<Uint8List> images = [];
+  bool isLoading = false;
 
   void init() async {
     emit(InitLoading());
-    isLoading = false;
-    emit(InitSuccess());
+
+    Future.delayed(Duration(seconds: 1), () {
+      isLoading = false;
+      emit(InitSuccess());
+    });
+
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:core_project/core/common/models/user_token_model.dart';
+import 'package:core_project/core/shared/user/data/models/user_token_model.dart';
 import 'package:core_project/core/shared/user/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity{

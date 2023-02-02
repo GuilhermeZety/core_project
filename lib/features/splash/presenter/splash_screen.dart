@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 
 import 'package:core_project/core/common/constants/app_assets.dart';
@@ -6,6 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:core_project/routes.dart';
+
+import 'package:core_project/core/common/services/current_session.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -18,11 +22,26 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      context.go(Routes.home, );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {      
+      var user = CurrentSession().user;
+
+      if (user == null) {
+        context.go(Routes.auth);
+      } 
+      else {
+        // if(await ConnectionChecker().hasConnection){
+          // await  Synchronization().synchronize(context);
+        // }
+        Future.delayed(const Duration(seconds: 3), () {
+          context.go(Routes.home, );
+        });
+      }
     });
+
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

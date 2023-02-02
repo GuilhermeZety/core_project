@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:core_project/core/common/models/user_token_model.dart';
-import 'package:core_project/core/common/path.dart';
+import 'package:core_project/core/shared/user/data/models/user_token_model.dart';
+import 'package:core_project/core/common/services/path_service.dart';
 import 'package:core_project/core/common/services/request_service.dart';
 import 'package:core_project/core/shared/user/data/models/user_model.dart';
 import 'package:dio/dio.dart';
@@ -18,7 +18,7 @@ class AuthRemoteDatasourceImplementation extends AuthRemoteDatasource {
   Future<UserModel> call(AuthModel auth) async {
     try {
       UserTokenModel? userToken = await RequestService().getUserToken(auth: auth);
-      //TODO: Remover código abaixo após disponibilizar api
+      //todo: Remover código abaixo após disponibilizar api
       
       // final response = await _service.post(
       //   APIPath.login,
@@ -41,7 +41,7 @@ class AuthRemoteDatasourceImplementation extends AuthRemoteDatasource {
         Failure(error).exception;
       }
  
-      String? path = await Path.pathDocuments();
+      String? path = await PathService.pathDocuments();
       String imagePath = "$path/${(data["data"]["usuario"]['foto'] as String).split('/').last}";
 
       if (data['data']['usuario']['foto'] != null) {

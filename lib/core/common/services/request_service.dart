@@ -1,4 +1,4 @@
-import 'package:core_project/core/common/models/user_token_model.dart';
+import 'package:core_project/core/shared/user/data/models/user_token_model.dart';
 import 'package:core_project/core/common/services/connection_checker_service.dart';
 import 'package:core_project/core/logic/cache_logic.dart';
 import 'package:core_project/core/logic/errors/app_exceptions.dart';
@@ -126,7 +126,7 @@ class RequestService{
         final response = await _dio.post(
           AppApiPath.token.value,
           data: {
-            //TODO: Add your data
+            //todo Add your data
           },
         ).onError(
           (error, stackTrace) => 

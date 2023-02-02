@@ -1,7 +1,7 @@
 import 'package:core_project/core/logic/save_load_mixin.dart';
 import 'package:flutter/material.dart';
 
-
+//TODO: SettingsLogic
 class SettingsLogic with ThrottledSaveLoadMixin {  
   ///File name for the settings file is saved as device
   @override
