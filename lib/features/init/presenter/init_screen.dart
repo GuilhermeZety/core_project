@@ -3,10 +3,11 @@ import 'package:core_project/features/init/cubit/init_cubit.dart';
 import 'package:core_project/ui/components/bars/custom_bottom_appbar.dart';
 import 'package:core_project/ui/components/buttons.dart';
 import 'package:core_project/ui/components/custom_checkbox.dart';
-import 'package:core_project/ui/components/dialogs/custom_dialogs.dart';
+import 'package:core_project/ui/dialogs/custom_dialogs.dart';
 import 'package:core_project/ui/components/inputs/text_input.dart';
 import 'package:core_project/ui/components/panels.dart';
 import 'package:core_project/ui/components/subscaffold.dart';
+import 'package:core_project/ui/dialogs/toasts.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 
@@ -104,6 +105,13 @@ class _InitScreenState extends State<InitScreen> {
                     ],
                   ),
                 ).show(context)
+              ),
+            ),
+            Gap(10),
+            Panel.secondary(
+              child: Button.primary(
+                child: Text('Show Toast'),
+                onPressed: () => Toasting.showToast('Testando', Colors.green)
               ),
             ),
             Switch(

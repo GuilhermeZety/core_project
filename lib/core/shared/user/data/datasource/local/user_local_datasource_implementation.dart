@@ -1,6 +1,7 @@
 
 
 import 'package:core_project/core/common/extensions/bool_sql_extension.dart';
+import 'package:core_project/core/logic/errors/app_exceptions.dart';
 import 'package:core_project/features/auth/errors/auth/auth_exceptions.dart';
 import 'package:core_project/features/auth/errors/failure_messages.dart';
 import 'package:sqflite/sql.dart';
@@ -26,53 +27,15 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
         conflictAlgorithm: ConflictAlgorithm.replace
       );
 
-      /// Stores the user level dataDigest
-      await database.insert(
-        'nivel', 
-        (user.userLevel as UserLevelModel).toMapWith({'usuario_id': user.id}), 
-        conflictAlgorithm: ConflictAlgorithm.replace
-      );
-
-      /// Stores the user allocated sector data
-      await database.insert(
-        'setor_alocado', 
-        (user.userAllocatedSector as UserAllocatedSectorModel).toMapWith({'usuario_id': user.id}), 
-        conflictAlgorithm: ConflictAlgorithm.replace
-      );
-
       /// Stores the user auth data
       await database.insert(
         'autenticacao', 
         (user.userAuth as UserAuthModel).toMapWith({'usuario_id': user.id}), 
         conflictAlgorithm: ConflictAlgorithm.replace
       );
-
-      /// Stores the user permissions data from the user
-      await databaseHandler.batch(
-        'usuario_permissao', 
-        user.userPermissions.map((e) => (e as UserPermissionModel).toMapWith({'usuario_id': user.id})).toList()
-      );
-
-      /// Stores the user activities data from the user
-      await databaseHandler.batch(
-        'usuario_atividade', 
-        user.userActivities.map((e) => (e as UserActivitiesModel).toMapWith({'usuario_id': user.id})).toList()
-      );
-
-      /// Stores the user activities permissions data from the user
-      List<Map<String, dynamic>> listPermissions = [];
-      
-      for(var activity in user.userActivities){
-        listPermissions.addAll((activity as UserActivitiesModel).mapPermissionsWith({'usuario_id': user.id, 'usuario_atividade_id': activity.id}));
-      }
-
-      await databaseHandler.batch(
-        'usuario_atividade_permissao', 
-        listPermissions
-      );
     }
-    catch (e){
-      throw AuthExceptions(failureMessage: e.toString());
+    catch(e){
+      throw DatabaseExceptions(message: e.toString());
     }
 
     return user.id;
@@ -88,30 +51,19 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
       if (userData.isEmpty) {
         Failure('Não foi possível encontrar o usuário').exception;
       }
-
-      final levelMap = await database.query('nivel', where: 'usuario_id = $id');
-
-      var allocatedSectorMap = await database.query('setor_alocado', where: 'usuario_id = $id');
       
       final authMap = await database.query('autenticacao', where: 'usuario_id = $id');
 
-      final listPermissionsMap = await database.query('usuario_permissao', where: 'usuario_id = $id');
+      return UserModel.fromMap({
+        'usuario': userData.first,
+        'autenticacao': authMap.first,
+      });
 
-      final listActivitiesMap = await database.query('usuario_atividade', where: 'usuario_id = $id');
-
-      final listActivitiesPermissionsMap = await database.query('usuario_atividade_permissao', where: 'usuario_id = $id');
-
-      return _structureUser(
-        userMap: userData.first,
-        levelMap: levelMap.first,
-        authMap: authMap.first,
-        allocatedSectorMap: allocatedSectorMap.first,
-        listPermissionsMap: listPermissionsMap,
-        listActivitiesMap: listActivitiesMap,
-        listActivitiesPermissionsMap: listActivitiesPermissionsMap,
-      );
     } on UserNotFoundException catch(e) {
       throw UserNotFoundException(failureMessage: e.failureMessage);
+    }
+    catch(e){
+      throw DatabaseExceptions(message: e.toString());
     }
   }
 
@@ -121,7 +73,7 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
       await store(user, logged: logged.toNumber());
     }
     catch(e){
-      throw UserNotFoundException(failureMessage: e.toString());
+      throw DatabaseExceptions(message: e.toString());
     }
   }
 
@@ -143,47 +95,6 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
     }
   }
 
-  UserModel _structureUser({
-    required Map<String, dynamic> userMap,
-    required Map<String, dynamic> levelMap,
-    required Map<String, dynamic> allocatedSectorMap,
-    required Map<String, dynamic> authMap,
-    required List<Map<String, dynamic>> listPermissionsMap,
-    required List<Map<String, dynamic>> listActivitiesMap,
-    required List<Map<String, dynamic>> listActivitiesPermissionsMap,
-  }) {
-    return UserModel.fromMap({
-      'usuario': userMap,
-      'autenticacao': authMap,
-      'setorAlocado': allocatedSectorMap,
-      'nivel': levelMap,
-      'aPermissao': listPermissionsMap,
-      'aAtividade': mixActivities(listActivitiesMap, listActivitiesPermissionsMap)
-    });
-  }
-
-  List<Map<String, dynamic>> mixActivities(
-    List<Map<String, dynamic>> listActivitiesMap, 
-    List<Map<String, dynamic>> listActivitiesPermissionsMap
-  ){
-    listActivitiesMap = listActivitiesMap.map((e) => Map<String, dynamic>.from(e)).toList();
-    listActivitiesPermissionsMap = listActivitiesPermissionsMap.map((e) => Map<String, dynamic>.from(e)).toList();
-    
-
-    final List<Map<String, dynamic>> finalListActivities = [];
-    for(var activity in listActivitiesMap){
-      var list = listActivitiesPermissionsMap.where((element) => element['usuario_atividade_id'] == activity['id']).toList();
-
-      if(list.isNotEmpty){
-        activity['aPermissao'] = list.toList();
-      }
-
-      finalListActivities.add(activity);
-    }
-
-    return finalListActivities;
-  }
-  
   @override
   Future<bool> exists() async {
     try {
@@ -200,6 +111,9 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
     } on UserNotFoundException catch(e) {
       throw UserNotFoundException(failureMessage: e.failureMessage);
     }
+    catch(e){
+      throw DatabaseExceptions(message: e.toString());
+    }
   }
   
   @override
@@ -210,18 +124,13 @@ class UserLocalDatasourceImplementation implements UserLocalDatasource {
       if(session.user != null){
         final database = await databaseHandler.getDatabase();
         await database.delete('usuario', where: 'id = ${session.user!.id}');
-        await database.delete('nivel', where: 'usuario_id = ${session.user!.id}');
-        await database.delete('setor_alocado', where: 'usuario_id = ${session.user!.id}');
         await database.delete('autenticacao', where: 'usuario_id = ${session.user!.id}');
-        await database.delete('usuario_permissao', where: 'usuario_id = ${session.user!.id}');
-        await database.delete('usuario_atividade', where: 'usuario_id = ${session.user!.id}');
-        await database.delete('usuario_atividade_permissao', where: 'usuario_id = ${session.user!.id}');      
       }
     } on UserNotFoundException catch(e) {
       throw UserNotFoundException(failureMessage: e.failureMessage);
     }
     catch(e){
-      throw AuthExceptions(failureMessage: e.toString());
+      throw DatabaseExceptions(message: e.toString());
     }
   }
 }

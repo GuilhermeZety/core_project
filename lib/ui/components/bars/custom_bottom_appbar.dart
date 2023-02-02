@@ -20,7 +20,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Button(onPressed: () {}, style: ButtonStyle(backgroundColor: Colors.transparent.toMaterialStateProperty()), child: Text('Selecionar Categoria', style: TextStyle(fontWeight: FontWeight.bold)),).expanded(),
-          Button(onPressed: () {}, style: ButtonStyle(backgroundColor: Colors.transparent.toMaterialStateProperty()), child: Text('Balneario pa', style: TextStyle(fontWeight: FontWeight.bold),)).expanded(),
+          Button(onPressed: () {}, style: ButtonStyle(backgroundColor: Colors.transparent.toMaterialStateProperty()), child: Text('Balneario Ca...', style: TextStyle(fontWeight: FontWeight.bold),)).expanded(),
         ],
       ),
     );

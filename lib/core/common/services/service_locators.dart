@@ -22,7 +22,6 @@ class ServiceLocators{
   static void setup() {
     getIt.registerSingleton<SettingsLogic>(SettingsLogic());
 
-
     getIt.registerSingleton<UserRemoteUsecase>(
       UserRemoteUsecaseImplementation(
         repository: UserRemoteRepositoryImplementation(
