@@ -24,6 +24,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           indicatorSize: TabBarIndicatorSize.tab,
           controller: widget.controller,
           indicatorPadding: EdgeInsets.only(left: 20, right: 20),
+          labelPadding: EdgeInsets.symmetric(horizontal:5),
           tabs: [
             NavItem(active: widget.controller.index == 0, icon: Icon(Icons.home), title: 'Inicio',),
             NavItem(active: widget.controller.index == 1, icon: Icon(Icons.card_giftcard), title: 'Fidelidade'),
@@ -32,8 +33,11 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
               count: widget.notifications ?? 0, 
               alignment: AlignmentDirectional.topEnd,
               backgroundColor: Theme.of(context).colorScheme.error, 
-              child: NavItem(active: widget.controller.index == 2, 
-              icon: Icon(Icons.notifications), title: 'Notificações'),
+              child: NavItem(
+                active: widget.controller.index == 2, 
+                icon: Icon(Icons.notifications), 
+                title: 'Notificações'
+              ),
             ),
             NavItem(active: widget.controller.index == 3, icon: Icon(Icons.menu), title: 'Mais'),     
           ],
@@ -57,7 +61,6 @@ class NavItem extends StatelessWidget {
       height: 60,
       width: double.infinity,
       duration: Duration(milliseconds: 300),
-      color: Colors.transparent,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
