@@ -1,6 +1,7 @@
 import 'package:core_project/ui/components/panels.dart';
 import 'package:extra_alignments/extra_alignments.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class CustomDialog extends StatelessWidget {
   const CustomDialog({super.key, required this.child, this.title});
@@ -12,7 +13,7 @@ class CustomDialog extends StatelessWidget {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return _content(context);
+        return _content(context).animate().fade();
       }
     );
   }

@@ -72,8 +72,9 @@ dependencies:
   fluttertoast: ^8.1.2
   #Simplify to make RichTexts
   simple_rich_text: ^2.0.49
+  
   flutter_animate: ^3.1.0
-  page_transition: ^2.0.9
+  easy_mask: ^2.0.1
   #================
 
 dev_dependencies:

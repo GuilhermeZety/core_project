@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:core_project/core/common/constants/app_assets.dart';
 import 'package:core_project/core/common/input_validations.dart';
 import 'package:core_project/features/auth/presenter/cubits/auth_cubit.dart';
-import 'package:core_project/ui/components/inputs/text_input.dart';
+import 'package:core_project/ui/components/inputs/input.dart';
 import 'package:core_project/ui/components/panels.dart';
 import 'package:extra_alignments/extra_alignments.dart';
 import 'package:flutter/material.dart';
@@ -86,13 +86,13 @@ class _AuthScreenState extends State<AuthScreen> {
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        TextInput(
+                                        Input(
                                           cubit.emailController, 
                                           validation: InputValidations.inputEmailValidation, 
                                           label: Text('Email'),
                                         ),
                                         Gap(10),
-                                        TextInput.password(
+                                        Input.password(
                                           cubit.passwordController, 
                                           label: Text('Senha'),
                                           validation: InputValidations.inputPasswordValidation,

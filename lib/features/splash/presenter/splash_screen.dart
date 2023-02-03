@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
         Future.delayed(2800.ms, () {
           _pageAnimationController.reverse();
           Future.delayed(1.seconds, () {
-            context.go(Routes.auth);
+            context.go(Routes.home);
           });
         });
       } 

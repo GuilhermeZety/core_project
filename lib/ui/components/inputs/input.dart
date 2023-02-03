@@ -1,18 +1,22 @@
 import 'package:core_project/core/common/constants/app_colors.dart';
+import 'package:core_project/core/common/extensions/date_format_extension.dart';
+import 'package:core_project/core/common/input_validations.dart';
+import 'package:core_project/main.dart';
+import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+
 
 //ignore: must_be_immutable
-class TextInput extends StatefulWidget {
+class Input extends StatefulWidget {
   final Widget? label;
   final TextInputType keyboard;
   final TextEditingController _controller;
 
-  bool isPassword = false;
-
   final String? Function(String?)? validation;
   final AutovalidateMode autovalidateMode;
-  final List<TextInputFormatter>? mask;
+  List<TextInputFormatter>? mask;
   final String? hint;
   final int? lines;
   final bool readOnly;
@@ -21,7 +25,7 @@ class TextInput extends StatefulWidget {
   final Function(String?)? onChange;
   final Size? size;
 
-  TextInput(TextEditingController controller, {
+  Input(TextEditingController controller, {
     super.key,
     this.label,
     this.keyboard = TextInputType.text,
@@ -36,11 +40,10 @@ class TextInput extends StatefulWidget {
     this.readOnly = false, this.size,
   }) : _controller = controller;
 
-  TextInput.numeric(TextEditingController controller, {
+  Input.numeric(TextEditingController controller, {
     super.key,
     required this.label,
     this.keyboard = TextInputType.number,
-    this.isPassword = false,
     this.validation,
     this.autovalidateMode = AutovalidateMode.disabled,
     this.mask,
@@ -52,11 +55,10 @@ class TextInput extends StatefulWidget {
     this.readOnly = false, this.size,
   }): _controller = controller;
 
-  TextInput.password(TextEditingController controller, {
+  Input.password(TextEditingController controller, {
     super.key,
     required this.label,
-    this.isPassword = true,
-    this.keyboard = TextInputType.text,
+    this.keyboard = TextInputType.visiblePassword,
     this.validation,
     this.autovalidateMode = AutovalidateMode.disabled,
     this.mask,
@@ -68,7 +70,7 @@ class TextInput extends StatefulWidget {
     this.readOnly = false, this.size,
   }): _controller = controller;
 
-  TextInput.email(TextEditingController controller, {
+  Input.email(TextEditingController controller, {
     super.key,
     required this.label,
     this.keyboard = TextInputType.emailAddress,
@@ -83,19 +85,32 @@ class TextInput extends StatefulWidget {
     this.readOnly = false, this.size,
   }): _controller = controller;
 
+  Input.dateYear(TextEditingController controller, {
+    super.key,
+    required this.label,
+    this.keyboard = TextInputType.datetime,
+    this.autovalidateMode = AutovalidateMode.onUserInteraction,
+    this.hint,
+    this.lines,
+    this.showError = true,
+    this.onChange,
+    this.isLoading,
+    this.readOnly = false, 
+    this.size,
+  }): _controller = controller, mask = [TextInputMask(mask: '99/99/9999')], validation = InputValidations.inputDateValidation;
+
   TextEditingController get controller => _controller;
 
   @override
-  State<TextInput> createState() => _TextInputState();
+  State<Input> createState() => _InputState();
 }
 
-class _TextInputState extends State<TextInput> {
-  bool isValueVisible = true;
+class _InputState extends State<Input> {
+  bool isValueVisible = false;
 
   @override
   void initState() {
-    isValueVisible = widget.isPassword;
-
+    if(widget.keyboard == TextInputType.visiblePassword) isValueVisible = true;
     super.initState();
   }
 
@@ -136,9 +151,7 @@ class _TextInputState extends State<TextInput> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           filled: true,
-          suffixIcon: widget.isPassword
-            ? _suffixIcon
-            : null,
+          suffixIcon: _suffixIcon(),
           fillColor: Theme.of(context).colorScheme.secondaryContainer,
           border: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: AppColors.grey_100),
@@ -156,15 +169,54 @@ class _TextInputState extends State<TextInput> {
 
   Widget get _passwordIcon => Icon(isValueVisible ? Icons.visibility_off : Icons.visibility);
   
-  Widget get _suffixIcon => GestureDetector(
-    onTap: () {
-      setState(() {
-        isValueVisible = !isValueVisible;
-      });
-    },
-    child: Padding(
-      padding: const EdgeInsets.all(11),
-      child: _passwordIcon,
-    ),
-  );
+  Widget _suffixIcon() {
+    if (widget.keyboard == TextInputType.visiblePassword) {
+      return IconButton(
+        onPressed: () {
+          setState(() {
+            isValueVisible = !isValueVisible;
+          });
+        },
+        icon: Material(elevation: 2, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)), child: Padding(
+          padding: const EdgeInsets.all(3),
+          child: _passwordIcon,
+        )),
+      );
+    }
+    else if(widget.keyboard == TextInputType.datetime){
+      var formatter = DateFormat('dd/MM/yyyy');
+      return IconButton(
+        onPressed: () async {
+          await showDatePicker(
+            context: context, 
+            initialDate: formatter.tryParse(widget.controller.text) ?? DateTime.now(), 
+            firstDate: DateTime(1900), 
+            lastDate: DateTime(2100),
+            locale: Locale(settingsLogic.currentLocale.value ?? 'en'),
+          ).then((value) {
+            if(value != null) {
+              widget.controller.text = formatter.format(value);
+              return;
+            }
+            widget.controller.text = formatter.format(formatter.tryParse(widget.controller.text) ?? DateTime.now());
+          });
+        }, 
+        icon: Material(
+          elevation: 2, 
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4)
+          ), 
+          child: Padding(
+            padding: const EdgeInsets.all(3),
+            child: Icon(
+              Icons.date_range, 
+              color: Colors.black,
+            ),
+          )
+        )
+      );
+    }
+    return SizedBox();
+  }
+  
 }

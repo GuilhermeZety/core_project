@@ -4,7 +4,7 @@ import 'package:core_project/ui/components/bars/custom_bottom_appbar.dart';
 import 'package:core_project/ui/components/buttons.dart';
 import 'package:core_project/ui/components/custom_checkbox.dart';
 import 'package:core_project/ui/dialogs/custom_dialogs.dart';
-import 'package:core_project/ui/components/inputs/text_input.dart';
+import 'package:core_project/ui/components/inputs/input.dart';
 import 'package:core_project/ui/components/panels.dart';
 import 'package:core_project/ui/components/subscaffold.dart';
 import 'package:core_project/ui/dialogs/toasts.dart';
@@ -138,7 +138,7 @@ class _InitScreenState extends State<InitScreen> {
             Panel.secondary(
               child: Button.primary(
                 child: Text('Show Toast'),
-                onPressed: () => Toasting.showToast('Testando', Colors.green)
+                onPressed: () => Toasting.showToast(context, 'DEU MERDA aaaaalajsdoiasjdoas aiosjdoiasjdoiasjdoijaiosoisdia', Colors.red)
               ),
             ),
             Switch(
@@ -148,11 +148,15 @@ class _InitScreenState extends State<InitScreen> {
             CustomCheckBox(value: true, onChanged: (_) {}),
             Padding( 
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextInput(TextEditingController()),
+              child: Input(TextEditingController()),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextInput.password(TextEditingController(), label: Text('asdasds'),),
+              child: Input.password(TextEditingController(), label: Text('Senha'),),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Input.dateYear(TextEditingController(), label: Text('Data'),),
             ),
             SizedBox(height: 200)
           ],
