@@ -1,4 +1,5 @@
 import 'package:core_project/core/common/extensions/responsive_extension.dart';
+import 'package:core_project/core/common/extensions/theme_extension.dart';
 import 'package:core_project/features/home/presenter/cubit/home_cubit.dart';
 import 'package:core_project/features/init/presenter/init_screen.dart';
 import 'package:core_project/ui/components/bars/custom_appbar.dart';
@@ -34,18 +35,18 @@ class _HomePresenterState extends State<HomePresenter> with TickerProviderStateM
       builder: (context, constraints) {
         if(constraints.isDesktop) {
            return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: context.colorScheme.background,
             body: Center(child: Text('Desktop'))
           );
         }
         if(constraints.isTablet) {
            return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: context.colorScheme.background,
             body: Center(child: Text('Tablet'))
           );
         }
         return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: context.colorScheme.background,
           appBar: CustomAppBar.logo(),
           bottomNavigationBar: CustomNavigationBar(controller: controller, notifications: 7),
           body: GestureDetector(

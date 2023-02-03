@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:core_project/core/common/extensions/theme_extension.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:core_project/core/common/constants/app_assets.dart';
@@ -36,7 +38,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: context.colorScheme.background,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Stack(
@@ -46,8 +48,8 @@ class _AuthScreenState extends State<AuthScreen> {
                 padding: const EdgeInsets.only(top: 100),
                 child: Hero(
                   tag: 'logo',
-                  child: TopCenter(child: Image.asset(AppAssets.logo, width: 100, color: Theme.of(context).colorScheme.inverseSurface))
-                ),
+                  child: TopCenter(child: Image.asset(AppAssets.logo, width: 100, color: context.colorScheme.inverseSurface))
+                ).animate().fade(duration: 700.ms),
               ),
             ),
             BottomCenter(
@@ -70,7 +72,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           },
                           builder: (context, state) {
                             if (state is AuthLoading) {
-                              return Center(child: LoadingAnimationWidget.stretchedDots(color: Theme.of(context).colorScheme.inverseSurface, size: 60));
+                              return Center(child: LoadingAnimationWidget.stretchedDots(color: context.colorScheme.inverseSurface, size: 60));
                             }
                             return Column(
                               children: [

@@ -36,7 +36,6 @@ class _InitScreenState extends State<InitScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: subscaffold
     return SubScaffold(
       bottom: CustomBottomAppBar(),
       body: SingleChildScrollView(
@@ -50,11 +49,8 @@ class _InitScreenState extends State<InitScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    //TODO: Separeted Translated
                     Center(child: Text(Translated.salve)),
-                    //TODO: Separeted Row
                     SeparatedRow(
-                      //TODO: Gap
                       separatorBuilder: () => Gap(10),
                       children: [
                         Button.primary(

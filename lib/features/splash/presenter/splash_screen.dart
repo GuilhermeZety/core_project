@@ -1,11 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:core_project/core/common/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 import 'package:core_project/core/common/constants/app_assets.dart';
-import 'package:gap/gap.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:core_project/routes.dart';
 
@@ -19,22 +19,28 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin{
+  late AnimationController _pageAnimationController;
   @override
   void initState() {
-
+    _pageAnimationController = AnimationController(vsync: this, duration: 1000.ms);
     WidgetsBinding.instance.addPostFrameCallback((_) async {      
       var user = CurrentSession().user;
 
       if (user == null) {
-        context.go(Routes.auth);
+        Future.delayed(2800.ms, () {
+          _pageAnimationController.reverse();
+          Future.delayed(1.seconds, () {
+            context.go(Routes.auth);
+          });
+        });
       } 
       else {
         // if(await ConnectionChecker().hasConnection){
           // await  Synchronization().synchronize(context);
         // }
         Future.delayed(const Duration(seconds: 3), () {
-          context.go(Routes.home, );
+          context.go(Routes.home);
         });
       }
     });
@@ -49,15 +55,19 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Hero(
-              tag: 'logo',
-              child: Image.asset(AppAssets.logo, width: 100, height: 100, color: Theme.of(context).colorScheme.inverseSurface, fit: BoxFit.fitHeight,)
-            ),
-            Gap(40),
-            LoadingAnimationWidget.stretchedDots(color: Theme.of(context).colorScheme.inverseSurface, size: 60)
+              Hero(
+                tag: 'logo',
+                child: Image.asset(AppAssets.logo, width: 160, height: 160, color: context.colorScheme.inverseSurface, fit: BoxFit.fitHeight,)
+              )
+              .animate(onPlay: (controller) => controller.repeat(reverse: true),)
+              .shimmer(delay: 400.ms, duration: 1800.ms, color: context.colorScheme.background.withOpacity(0.3))
+              .shake(hz: 2, curve: Curves.easeInOutCubic, rotation: 0.05)
+              .scaleXY(end: 1.1, duration: 600.ms) 
+              .then(delay: 600.ms)
+              .scaleXY(end: 1 / 1.1)
           ],
         )
-      ),
+      ).animate(controller: _pageAnimationController).fade(duration: 1000.ms),
     );
   } 
 }

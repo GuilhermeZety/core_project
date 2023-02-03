@@ -154,7 +154,7 @@ class _TextInputState extends State<TextInput> {
     );
   }
 
-  Widget get _passwordIcon => Icon(isValueVisible ? Icons.visibility : Icons.visibility_off);
+  Widget get _passwordIcon => Icon(isValueVisible ? Icons.visibility_off : Icons.visibility);
   
   Widget get _suffixIcon => GestureDetector(
     onTap: () {

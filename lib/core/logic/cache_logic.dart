@@ -1,7 +1,6 @@
 import 'package:core_project/core/shared/user/data/models/user_token_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//TODO: SettingsLogic
 class CacheLogic{
   /// Singleton
     CacheLogic._();

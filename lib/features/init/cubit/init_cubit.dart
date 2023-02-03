@@ -1,8 +1,7 @@
 
 import 'package:bloc/bloc.dart';
 part 'init_state.dart';
-//TODO: Cubit
-// Continua o mesmo
+
 class InitCubit extends Cubit<InitState> {
   InitCubit(): super(InitInitial());
 
